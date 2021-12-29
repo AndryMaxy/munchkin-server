@@ -1,12 +1,12 @@
 # syntax=docker/dockerfile:1
+FROM openjdk:11
 
-FROM gradle:6.9.1-jdk11
+ARG JAR_FILE=build/libs/munchkin-server.jar
 
-COPY gradle ./gradle
-COPY gradlew ./
-COPY gradlew.bat ./
-COPY src ./src
+COPY ${JAR_FILE} app.jar
 
-RUN ./gradlew build
+EXPOSE 9090
+
+ENTRYPOINT ["java","-jar","/app.jar"]
 
 
