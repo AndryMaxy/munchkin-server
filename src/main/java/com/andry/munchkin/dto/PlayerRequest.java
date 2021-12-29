@@ -3,6 +3,7 @@ package com.andry.munchkin.dto;
 public class PlayerRequest {
 
     private String name;
+    private String sex;
     private int level;
     private int bonus;
 
@@ -28,5 +29,13 @@ public class PlayerRequest {
 
     public void setBonus(int bonus) {
         this.bonus = bonus;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 }

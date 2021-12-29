@@ -16,8 +16,12 @@ public class Player {
     @JsonView(Views.Full.class)
     private int sum;
 
-    public Player(String name) {
+    @JsonView(Views.Full.class)
+    private String sex;
+
+    public Player(String name, String sex) {
         this.name = name;
+        this.sex = sex;
         updateSum();
     }
 
@@ -41,6 +45,8 @@ public class Player {
     }
 
     public void setBonus(int bonus) {
+        if (bonus < 0) return;
+
         this.bonus = bonus;
         updateSum();
     }
@@ -51,5 +57,13 @@ public class Player {
 
     public void updateSum() {
         this.sum = level + bonus;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 }

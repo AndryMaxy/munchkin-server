@@ -19,7 +19,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/munchkin")
-                .setAllowedOrigins("http://localhost:3500")
+                .setAllowedOrigins("http://localhost:5000")
                 .withSockJS();
     }
 }

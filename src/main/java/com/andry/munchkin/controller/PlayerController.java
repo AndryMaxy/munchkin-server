@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
@@ -29,8 +30,8 @@ public class PlayerController {
     }
 
     @GetMapping("/all")
-    public List<Player> getAll() {
-        return players;
+    public ResponseEntity<List<Player>> getAll() {
+        return ResponseEntity.ok(players);
     }
 
     @GetMapping("/{name}")
@@ -43,10 +44,20 @@ public class PlayerController {
     }
 
     @PostMapping("/{name}")
-    public ResponseEntity<Player> create(@PathVariable String name) {
-        Player player = new Player(name);
-        players.add(player);
-        sender.accept(EventType.LOGIN, player);
+    public ResponseEntity<Player> create(@PathVariable String name, @RequestParam String sex) {
+        Optional<Player> optPlayer = players.stream()
+                .filter(plr -> plr.getName().equals(name))
+                .findFirst();
+
+        Player player;
+        if (optPlayer.isEmpty()) {
+            player = new Player(name, sex);
+            players.add(player);
+            sender.accept(EventType.LOGIN, player);
+        } else {
+            player = optPlayer.get();
+        }
+
         return ResponseEntity.ok(player);
     }
 
@@ -58,6 +69,7 @@ public class PlayerController {
                 .orElseThrow(() -> new RuntimeException("No player"));
         player.setLevel(request.getLevel());
         player.setBonus(request.getBonus());
+        player.setSex(request.getSex());
 
         sender.accept(EventType.UPDATE, player);
 
