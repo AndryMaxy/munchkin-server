@@ -1,0 +1,14 @@
+services:
+  #машину (комп) сервера необходимо закрепить за ip адресом http://192.168.0.200
+  server:
+    image: andrymax/munchkin-server:latest
+    ports:
+      - "9090:9090"
+  player:
+    image: andrymax/munchkin-player:latest
+    ports:
+      - "7000:80"
+  board:
+    image: andrymax/munchkin-board:latest
+    ports:
+      - "5000:80"
